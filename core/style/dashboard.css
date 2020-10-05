@@ -8,6 +8,11 @@ body {
   vertical-align: text-bottom;
 }
 
+.bg-pink {
+  background-color: #ef5777;
+  color: #ffffff;
+}
+
 /*
  * Sidebar
  */
