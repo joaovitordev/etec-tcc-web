@@ -1,0 +1,30 @@
+.owner-section, .property-section {
+    width: 90%;
+    margin: auto;
+    margin-top: 43px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.images-section {
+    width: 90%;
+    margin: auto;
+    margin-top: 43px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.btn-new-property {
+    margin: 33px;
+    margin-left: 5%;
+    background-color: #fc5c65 !important;
+    color: #ffffff;
+}
+
+.back-button {
+    font-size: 30px;
+    margin-top: 0px;
+}
+

@@ -36,47 +36,46 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Imobiliaria</a>
-        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
-            data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-primary">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
         </button>
-        <input class="form-control form-control-dark w-100" type="text" placeholder="Pesquisar imóveis"
-            aria-label="Search">
-        <ul class="navbar-nav px-3">
-            <li class="nav-item text-nowrap">
-                <a class="nav-link" href="#">Sair</a>
+        <div class="collapse itens-menu navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="#"> <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.5 10.995V14.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5V11c0-.25-.25-.5-.5-.5H7c-.25 0-.5.25-.5.495z"/>
+                <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+              </svg>Imóveis <span class="sr-only">(current)</span></a>
             </li>
-        </ul>
-    </nav>
+            <li class="nav-item">
+              <a class="nav-link" href="#"> <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-people-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+              </svg>Usuários</a> 
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <nav class="navbar navbar-expand-lg navbar-second">
+        <div class="row second-navbar-itens">
+          <h1 class="title-home-page">Imóveis</h1>
+          <a href="pages/view/criar-imovel.html">
+            <button type="button" class="btn btn-sm btn-novo-imovel">Novo imóvel</button>
+          </a>
+        </div>
+      </nav>
+
 
     <div class="container-fluid">
         <div class="row">
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-                <div class="sidebar-sticky pt-3">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">
-                                <span data-feather="home"></span>
-                                Imóveis <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="users"></span>
-                                Usuários
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+
+
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <a href="../../index.html"><span data-feather="arrow-left-circle"></span></a>
-                    <h1 class="h2">Editar Imóvel</h1>
+                    <h1 class="h2">Cadastrar Imóveis</h1>
                     <!-- <div class="btn-toolbar mb-2 mb-md-0">
           <button type="button" class="btn btn-sm btn-outline-secondary">
             <span data-feather="plus-circle"></span>
@@ -110,6 +109,16 @@
                             <label for="inputPassword4">Email</label>
                             <input type="email" class="form-control" id="inputPassword4"
                                 placeholder="ronaldinho@gmail.com">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Facebook</label>
+                            <input type="text" class="form-control" id="inputPassword4" placeholder="Link do Facebook">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">Instagram</label>
+                            <input type="text" class="form-control" id="inputEmail4" placeholder="Link do Instagram">
                         </div>
                     </div>
                 </form>

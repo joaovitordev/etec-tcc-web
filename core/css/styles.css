@@ -1,0 +1,56 @@
+body {
+    font-size: .875rem;
+    background-color: #f5f7f9;
+  }
+  .navbar-primary {
+    background-color: #fc5c65 !important;
+  }
+  
+  .navbar-second {
+    background-color: #ffffff;
+  }
+  
+  .itens-menu {
+    justify-content: flex-end;
+    margin-right: 4%;
+  }
+  
+  .imoveis-card {
+    margin: 50px;
+  }
+  
+  .second-navbar {
+    
+  }
+  
+  #title-off {
+    display: none;
+  }
+  
+  .title-home-page {
+    font-size: 25px;
+  }
+  
+  svg {
+    font-size: 15px;
+      margin-top: -4px;
+      margin-right: 3px;
+  }
+  
+  .second-navbar-itens {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin-top: 6px;
+    margin-left: 5%;
+  }
+  
+  .btn-novo-imovel {
+    height: 30px;
+    background-color: #fc5c65 !important;
+    color: #ffffff;
+  }
+
+.new-property-link {
+  color: #ffffff;
+}
