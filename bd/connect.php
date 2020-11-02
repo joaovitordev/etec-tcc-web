@@ -2,7 +2,7 @@
 // Conexão com banco de dados
 $servername = "localhost";
 $username = "root";
-$password = "12345@@";
+$password = "admin";
 $db_name = "imoveis";
 
 $connect = mysqli_connect($servername, $username, $password, $db_name);
