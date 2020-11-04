@@ -2,13 +2,13 @@
 // Sessão
 session_start();
 // Conexão
-require_once 'db_connect.php';
+require_once '../bd/connect.php';
 
 if(isset($_POST['btn-deletar'])):
 	
-	$id = mysqli_escape_string($connect, $_POST['id']);
+	$id = mysqli_escape_string($connect, $_POST['id_property']);
 
-	$sql = "DELETE FROM clientes WHERE id = '$id'";
+	$sql = "DELETE FROM property WHERE id_property = '$id'";
 
 	if(mysqli_query($connect, $sql)):
 		$_SESSION['mensagem'] = "Deletado com sucesso!";
