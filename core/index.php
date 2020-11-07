@@ -1,6 +1,8 @@
 <?php
 // Message
 include_once 'includes/message.php';
+// Conexão
+include_once '../bd/connect.php';
 ?>
 
 <!doctype html>
@@ -71,123 +73,114 @@ include_once 'includes/message.php';
   <div class="container-fluid">
     <div class="row">
 
+
       <div class="row imoveis-card">
-        <div class="col-md-3">
-          <div class="card mb-4 shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
-              <title>Placeholder</title>
-              <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-            </svg>
-            <div class="card-body">
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModalScrollable">Ver</button>
-                  <a href="pages/view/editar-imovel.html"><button type="button" class="btn btn-sm btn-outline-secondary">Editar</button></a>
+        <?php
+        $sql = "SELECT * FROM property 
+        inner JOIN owner ON (property.id_owner = owner.id_owner) 
+        inner JOIN address ON (property.id_address = address.id_address)  
+        inner JOIN images ON (images.id_property = property.id_property)
+        GROUP BY PROPERTY.ID_PROPERTY;
+        ";
+        $resultado = mysqli_query($connect, $sql);
+
+        if (mysqli_num_rows($resultado) > 0) :
+
+          while ($dados = mysqli_fetch_array($resultado)) :
+        ?>
+            <div class="col-md-4">
+              <div class="card mb-4 shadow-sm">
+                <img src="../../Downloads/<?php echo $dados['url']; ?>" alt="">
+                <div class="card-body">
+                  <p class="card-text"><?php echo $dados['title']; ?></p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#ProfileProperty<?php echo $dados['id_property']; ?>">Ver</button>
+
+                      <a href="pages/view/editar-imovel.html">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button></a>
+
+                      <a href="#deleteModal<?php echo $dados['id_property']; ?>"><button type="button" class="btn btn-sm btn-outline-secondary">Excluir</button></a>
+                    </div>
+                    <small class="text-muted"><?php echo $dados['neighborhood']; ?></small>
+                  </div>
                 </div>
-                <small class="text-muted">Vila Gilda</small>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card mb-4 shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
-              <title>Placeholder</title>
-              <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-            </svg>
-            <div class="card-body">
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Ver</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="ProfileProperty<?php echo $dados['id_property']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <?php echo $dados['title']; ?>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                  </div>
                 </div>
-                <small class="text-muted">Vila Gilda</small>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card mb-4 shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
-              <title>Placeholder</title>
-              <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-            </svg>
-            <div class="card-body">
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Ver</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button>
-                </div>
-                <small class="text-muted">Vila Gilda</small>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card mb-4 shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
-              <title>Placeholder</title>
-              <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-            </svg>
-            <div class="card-body">
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Ver</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button>
-                </div>
-                <small class="text-muted">Vila Gilda</small>
-              </div>
-            </div>
-          </div>
-        </div>
 
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                ...
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+
+            <div class="modal fade" id="deleteModal<?php echo $dados['id_property']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Deseja Excluir!!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="php_action/delete.php" method="POST">
+                      <input type="hidden" name="id" value="<?php echo $dados['id_property']; ?>">
+                      <button type="submit" name="btn-deletar" class="btn red">Sim, quero deletar</button>
+
+                      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+
+                    </form>
+                  </div>
+
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-
 
 
       </div>
 
-      </main>
+    <?php
+          endwhile;
+        else : ?>
+
+
+  <?php
+        endif;
+  ?>
+
+
+
+
+
+
     </div>
+
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
 
-  <script>
-    M.AutoInit();
-  </script>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-  <script>
-    window.jQuery || document.write('<script src="assets/js/vendor/jquery.slim.min.js"><\/script>')
-  </script>
-  <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="js/dashboard.js"></script>
 </body>
 
