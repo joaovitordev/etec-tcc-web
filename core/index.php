@@ -2,7 +2,7 @@
 // Message
 include_once 'includes/message.php';
 // Conexão
-include_once '../bd/connect.php';
+include_once 'connect.php';
 ?>
 
 <!doctype html>
@@ -19,22 +19,6 @@ include_once '../bd/connect.php';
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-  </style>
   <!-- Custom styles for this template -->
   <link href="css/styles.css" rel="stylesheet">
 </head>
@@ -70,113 +54,96 @@ include_once '../bd/connect.php';
     </div>
   </nav>
 
-  <div class="container-fluid">
+
+  <div class="container">
     <div class="row">
-
-
-      <div class="row imoveis-card">
-        <?php
-        $sql = "SELECT * FROM property 
-        inner JOIN owner ON (property.id_owner = owner.id_owner) 
-        inner JOIN address ON (property.id_address = address.id_address)  
-        inner JOIN images ON (images.id_property = property.id_property)
-        GROUP BY PROPERTY.ID_PROPERTY;
+      <?php
+      $sql = "SELECT *, GROUP_CONCAT(images.url SEPARATOR ',') AS 'images-property' FROM property 
+      inner JOIN owner ON (property.id_owner = owner.id_owner) 
+      inner JOIN address ON (property.id_address = address.id_address)  
+      inner JOIN images ON (images.id_property = property.id_property)
+    GROUP BY PROPERTY.ID_PROPERTY;
         ";
-        $resultado = mysqli_query($connect, $sql);
+      $resultado = mysqli_query($connect, $sql);
 
-        if (mysqli_num_rows($resultado) > 0) :
+      if (mysqli_num_rows($resultado) > 0) :
 
-          while ($dados = mysqli_fetch_array($resultado)) :
-        ?>
-            <div class="col-md-4">
-              <div class="card mb-4 shadow-sm">
-                <img src="../../Downloads/<?php echo $dados['url']; ?>" alt="">
-                <div class="card-body">
-                  <p class="card-text"><?php echo $dados['title']; ?></p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#ProfileProperty<?php echo $dados['id_property']; ?>">Ver</button>
+        while ($dados = mysqli_fetch_array($resultado)) :
+      ?>
 
-                      <a href="pages/view/editar-imovel.html">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button></a>
 
-                      <a href="#deleteModal<?php echo $dados['id_property']; ?>"><button type="button" class="btn btn-sm btn-outline-secondary">Excluir</button></a>
-                    </div>
-                    <small class="text-muted"><?php echo $dados['neighborhood']; ?></small>
-                  </div>
-                </div>
+          <div class="col">
+            <div class="card shadow-sm" style="width: 18rem;">
+              <img src="../../imgs/<?php 
+                                     $values = explode(',', $dados['images-property']);
+                                     echo $values[0];
+                                    ?>" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title"><?php echo $dados['neighborhood']; ?></h5>
+                <p class="card-text"><?php echo $dados['title']; ?></p>
+
+                <?php 
+                                     $values = explode(',', $dados['images-property']);
+                                     
+                                     foreach($values as $dados) {
+                                      print  '<img width="50px" src="../../imgs/'. $dados .'">';
+                                     }
+                                    ?>
+
+                <button data-toggle="modal" data-target="#ProfileProperty<?php echo $dados['property_id']; ?>" type="button" style="background-color: #3867d6;" class="btn btn-sm">
+                  <svg style="color: #ffffff;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z" />
+                    <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                  </svg>
+                </button>
+                <button type="button" style="background-color: #f7b731;" class="btn btn-sm">
+                  <svg style="color: #ffffff;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                  </svg>
+                </button>
+                <button type="button" style="background-color: #ff3838;" class="btn btn-sm">
+                  <svg style="color: #ffffff;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                  </svg>
+                </button>
               </div>
             </div>
+          </div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="ProfileProperty<?php echo $dados['id_property']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <?php echo $dados['title']; ?>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
-                </div>
-              </div>
+                    
+      <div class="modal fade" id="ProfileProperty<?php echo $dados['property_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
+            <div class="modal-body">
 
+                <img style="width: 100px;" src="../../imgs/<?php echo $dados['url']; ?>" class="card-img-top" alt="...">
 
-
-            <div class="modal fade" id="deleteModal<?php echo $dados['id_property']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Deseja Excluir!!</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <form action="php_action/delete.php" method="POST">
-                      <input type="hidden" name="id" value="<?php echo $dados['id_property']; ?>">
-                      <button type="submit" name="btn-deletar" class="btn red">Sim, quero deletar</button>
-
-                      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
-
-                    </form>
-                  </div>
-
-                </div>
-              </div>
             </div>
-
-
+          </div>
+        </div>
       </div>
 
-    <?php
-          endwhile;
-        else : ?>
+
+        <?php
+        endwhile;
+      else : ?>
 
 
-  <?php
-        endif;
-  ?>
-
-
-
+      <?php
+      endif;
+      ?>
 
 
 
     </div>
-
   </div>
-
-
-
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

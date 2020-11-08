@@ -15,9 +15,6 @@ body {
     margin-right: 4%;
   }
   
-  .imoveis-card {
-    margin: 50px;
-  }
   
   .second-navbar {
     
@@ -33,8 +30,8 @@ body {
   
   svg {
     font-size: 15px;
-      margin-top: -4px;
-      margin-right: 3px;
+    margin-top: -4px;
+    margin-right: 3px;
   }
   
   .second-navbar-itens {
@@ -53,4 +50,8 @@ body {
 
 .new-property-link {
   color: #ffffff;
+}
+
+img {
+  max-width: 100%;
 }
