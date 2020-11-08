@@ -103,7 +103,7 @@
             </div>
         </div>
 
-        <!-- <div class="property-section">
+         <div class="property-section">
                 <h4>Informações da casa</h4>
                 <h6>Endereço</h6>
 
@@ -251,9 +251,9 @@
                             <input type="number" class="form-control" id="valor">
                         </div>
                     </div>
-            </div> -->
+            </div> 
 
-        <!-- <div class="images-section">
+         <div class="images-section">
                 <div class="form-row">
                     <div class="form-group col-md-10">
                         <label for="inputCEP">Imagens</label>
@@ -264,7 +264,7 @@
                     </div>
 
                 </div>
-            </div> -->
+            </div> 
 
         <button type="submit" class="btn btn-new-property" name="btn-new-owner">Cadastrar imóvel</button>
     </form>
