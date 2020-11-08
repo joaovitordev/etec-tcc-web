@@ -64,7 +64,7 @@
             </div>
         </nav>
 
-        <form action="../php_action/create.php" method="POST">
+        <form action="../php_action/create.php" method="POST" enctype="multpart/form-data">
         <div class="owner-section">
                 <h4>Informações do propietário</h4>
                 <div class="form-row">
@@ -285,17 +285,17 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="images-section">
+                <div class="images-section">
                     <div class="form-row">
                         <div class="form-group col-md-10">
                             <label for="inputCEP">Imagens</label>
                             <div class="form-group">
                                 <label for="exampleFormControlFile1">Imagens selecionadas</label>
-                                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="property-images">
+                                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="property-images[]" accept="image/jpg, image/jpeg, image/png" multiple>
                             </div>
                         </div>
                     </div>
-                </div> -->
+                </div>
             </div>
             <button type="submit" class="btn btn-new-property" name="btn-new-owner">Cadastrar imóvel</button>
         </form>

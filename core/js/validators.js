@@ -134,24 +134,24 @@ function validaCPF(CPF){
 
 function telefone_validation(telefone){
 	// CÓDIGO RETIRADO DO SITE: https://jsfiddle.net/83zopn51/1/
-    //retira todos os caracteres menos os numeros
-    telefone = telefone.replace(/\D/g,''); 			//Remove tudo o que não é dígito
-    telefone = telefone.replace(/^(d{2})(d)/g,"($1) $2"); 	//Coloca parênteses em volta dos dois primeiros dígitos
-    telefone = telefone.replace(/(d)(d{4})$/,"$1-$2");    	//Coloca hífen entre o quarto e o quinto dígitos
+  //retira todos os caracteres menos os numeros
+  telefone = telefone.replace(/\D/g,''); 			//Remove tudo o que não é dígito
+  telefone = telefone.replace(/^(d{2})(d)/g,"($1) $2"); 	//Coloca parênteses em volta dos dois primeiros dígitos
+  telefone = telefone.replace(/(d)(d{4})$/,"$1-$2");    	//Coloca hífen entre o quarto e o quinto dígitos
+  
+  //verifica se tem a qtde de numero correto
+  if(!(telefone.length >= 10 && telefone.length <= 11)) return false;
+  
+  //Se tiver 11 caracteres, verificar se começa com 9 o celular
+  if (telefone.length == 11 && parseInt(telefone.substring(2, 3)) != 9) return false;
     
-    //verifica se tem a qtde de numero correto
-    if(!(telefone.length >= 10 && telefone.length <= 11)) return false;
-    
-    //Se tiver 11 caracteres, verificar se começa com 9 o celular
-    if (telefone.length == 11 && parseInt(telefone.substring(2, 3)) != 9) return false;
-      
-    //verifica se não é nenhum numero digitado errado (propositalmente)
-    for(var n = 0; n < 10; n++){
-    	//um for de 0 a 9.
-		//estou utilizando o metodo Array(q+1).join(n) onde "q" é a quantidade e n é o 	  
-		//caractere a ser repetido
-    	if(telefone == new Array(11).join(n) || telefone == new Array(12).join(n)) return false;
-    }  
+  //verifica se não é nenhum numero digitado errado (propositalmente)
+  for(var n = 0; n < 10; n++){
+    //um for de 0 a 9.
+  //estou utilizando o metodo Array(q+1).join(n) onde "q" é a quantidade e n é o 	  
+  //caractere a ser repetido
+    if(telefone == new Array(11).join(n) || telefone == new Array(12).join(n)) return false;
+  }  
 	
 	//DDDs validos
     var codigosDDD = [11, 12, 13, 14, 15, 16, 17, 18, 19,
