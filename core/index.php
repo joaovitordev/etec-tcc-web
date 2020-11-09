@@ -2,7 +2,7 @@
 // Message
 include_once 'includes/message.php';
 // Conexão
-include_once '../bd/connect.php';
+include_once '../connect.php';
 ?>
 
 <!doctype html>

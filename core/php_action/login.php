@@ -2,7 +2,7 @@
 // Sessão
 session_start();
 // Conexão
-require_once '../../bd/connect.php';
+require_once '../../connect.php';
 
 if(isset($_POST['btn-login'])):
     
