@@ -2,7 +2,7 @@
 // Sessão
 session_start();
 // Conexão
-require_once '../../connect.php';
+require_once '../connect.php';
 // Clear
 function clear($input) {
 	global $connect;
@@ -204,40 +204,45 @@ if(isset($_POST['btn-new-owner'])):
 	// Fazendo upload de imagens multiplas utilizando o uploarder via composer
 
 	// Utilizando do Uploader para fazer o objeto da imagem que será upada e salva no banco.
-	$upload = new \CoffeeCoder\Uploarder\Image(uploadDir:"storage", fileTypeDir:"images");  
-	$files = $_FILES; // Várivel global para upload de arquivos.
+	// $upload = new \CoffeeCoder\Uploarder\Image(uploadDir:"storage", fileTypeDir:"images");  
+	// $files = $_FILES; // Várivel global para upload de arquivos.
 	
 	// Checando se a variável files está vazia.
-	if(!empty($files["property-images"])):
-		// Incorporando a '$files' em uma variável para filtragem.
-		$images = $files["property-images"];
-		// Construindo um índice para cada arquivo que será salvo
-		for($count = 0;$count < count($images["type"]); $count++):
-			// Arrumando a estrutura do array.
-			foreach(array_keys($images) as $keys):
-				$imageFiles[$count][$keys] = $images[$keys][$count];
-			endforeach;	
-		endfor;
-		// Checando se os itens dentro do $imageFiles são do tipo permitido.
-		foreach ($imageFiles as $files)
-			// Caso imagem inválida.
-			if(empty($file["type"])):
-				$_SESSION['mensagem'] = "Selecione uma imagem válida";
-			elseif(!in_array($file["type"], $upload::isAllowed())):
-				// Caso o tipo do arquivo não seja permitido.
-				$_SESSION['mensagem'] = "O arquivo".$file["type"]." não é um formato válido";
-			else:
-				// quando tudo está dentro dos conformes.
-				$uploaded = $upload->upload($file, pathinfo($file["name"], PATHINFO_FILENAME), width: "350")
-				// Inserindo os dados do Proprietário
-				$imageSql = "INSERT INTO images (id_image, url, id_property) VALUES (null, $uploaded, $propertyId)";
-				if(mysqli_query($connect, $imageSql)):
-					$_SESSION['mensagem'] = "Imagens cadastradas com sucesso!";
-				else:
-					$_SESSION['mensagem'] = "Erro ao cadastrar uma ou mais nova(s) Imagem(ns)!";
-				endif;""
-			endif
-			/*
+	// if(!empty($files["property-images"])):
+	// 	// Incorporando a '$files' em uma variável para filtragem.
+	// 	$images = $files["property-images"];
+	// 	// Construindo um índice para cada arquivo que será salvo
+	// 	for($count = 0;$count < count($images["type"]); $count++):
+	// 		// Arrumando a estrutura do array.
+	// 		foreach(array_keys($images) as $keys):
+	// 			$imageFiles[$count][$keys] = $images[$keys][$count];
+	// 		endforeach;	
+	// 	endfor;
+	// 	// Checando se os itens dentro do $imageFiles são do tipo permitido.
+	// 	foreach ($imageFiles as $files)
+	// 		// Caso imagem inválida.
+	// 		if(empty($file["type"])):
+	// 			$_SESSION['mensagem'] = "Selecione uma imagem válida";
+	// 		elseif(!in_array($file["type"], $upload::isAllowed())):
+	// 			// Caso o tipo do arquivo não seja permitido.
+	// 			$_SESSION['mensagem'] = "O arquivo".$file["type"]." não é um formato válido";
+	// 		else:
+	// 			// quando tudo está dentro dos conformes.
+	// 			$uploaded = $upload->upload($file, pathinfo($file["name"], PATHINFO_FILENAME), width: "350");
+	// 			// Inserindo os dados do Proprietário
+	// 			$imageSql = "INSERT INTO images (id_image, url, id_property) VALUES (null, $uploaded, $propertyId)";
+	// 			if(mysqli_query($connect, $imageSql)):
+	// 				$_SESSION['mensagem'] = "Imagens cadastradas com sucesso!";
+	// 			else:
+	// 				$_SESSION['mensagem'] = "Erro ao cadastrar uma ou mais nova(s) Imagem(ns)!";
+	// 			endif;
+	// 		endif;
+	
+	// 	endforeach;
+	// endif; 		
+endif;
+
+		
 				// Dados do Proprietário
 				$uploaded = clear($_POST['property-images']);
 				// Inserindo os dados do Proprietário
@@ -247,10 +252,7 @@ if(isset($_POST['btn-new-owner'])):
 				else:
 					$_SESSION['mensagem'] = "Erro ao cadastrar uma ou mais nova(s) Imagem(ns)!";
 				endif;
-			*/	
-		endforeach;
-	endif; 		
-endif;
+				
 
 mysqli_close($connect);
 header('Location: ../index.php');

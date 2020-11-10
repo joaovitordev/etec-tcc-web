@@ -55,3 +55,83 @@ body {
 img {
   max-width: 100%;
 }
+
+.btn-view {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  background-color: #3867d6;
+  position: absolute !important;
+  margin-left: 90%;
+  margin-top: -10px;
+  cursor: pointer;
+}
+
+.btn-delete {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  background-color: #EA2027;
+  position: absolute !important;
+  margin-left: 90%;
+  margin-top: 58px;
+  cursor: pointer;
+}
+
+.btn-edit {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  background-color: #fed330;
+  position: absolute !important;
+  margin-left: 90%;
+  margin-top: 24px;
+  cursor: pointer;
+}
+
+.icon-view {
+  margin-left: 7px;
+  margin-top: 4px;
+  color: #ffffff;
+}
+
+.title-profile {
+  font-size: 20px;
+}
+
+.img-profile {
+  width: 90%;
+  height: 200px;
+  border-radius: 5px;
+}
+
+.card-carrousel {
+  background-color: #f5f7f9;
+  margin-right: 10px;
+  margin-left: 10px;
+  background-color: #f5f7f9;
+}
+
+.card-maps {
+  background-color: #f5f7f9;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.modal-dialog {
+  max-width: 90% !important;
+  max-height: 90% !important;
+}
+
+.icons-grid {
+  font-size: 20px !important;
+  color: #fc5c65 !important;
+  padding-top: 10px;
+}
+
+.background {
+  background-color: #f5f7f9;
+  border-radius: 5px;
+  margin: 5px;
+}
