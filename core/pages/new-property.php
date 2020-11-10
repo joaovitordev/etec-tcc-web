@@ -102,7 +102,13 @@
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
+        </div>
+
+         <div class="property-section">
+=======
             <div class="property-section">
+>>>>>>> 3996df26110ee69ad8c4e57d355b5bdfe2745140
                 <h4>Informações da casa</h4>
                 <h6>Endereço</h6>
                 <div class="form-row">
@@ -284,6 +290,18 @@
                             <input type="number" class="form-control" id="valor" name="property-deposit">
                         </div>
                     </div>
+<<<<<<< HEAD
+            </div> 
+
+         <div class="images-section">
+                <div class="form-row">
+                    <div class="form-group col-md-10">
+                        <label for="inputCEP">Imagens</label>
+                        <div class="form-group">
+                            <label for="exampleFormControlFile1">Exemplo de input de arquivo</label>
+                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                          </div>
+=======
                 </div>
                 <div class="images-section">
                     <div class="form-row">
@@ -294,8 +312,32 @@
                                 <input type="file" class="form-control-file" id="exampleFormControlFile1" name="property-images[]" accept="image/jpg, image/jpeg, image/png" multiple>
                             </div>
                         </div>
+>>>>>>> 3996df26110ee69ad8c4e57d355b5bdfe2745140
                     </div>
                 </div>
+<<<<<<< HEAD
+            </div> 
+
+        <button type="submit" class="btn btn-new-property" name="btn-new-owner">Cadastrar imóvel</button>
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+
+    <script>
+        M.AutoInit();
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script>
+        window.jQuery || document.write('<script src="assets/js/vendor/jquery.slim.min.js"><\/script>')
+    </script>
+    <script src="../../assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script src="../../js/dashboard.js"></script>
+</body>
+
+=======
             </div>
             <button type="submit" class="btn btn-new-property" name="btn-new-owner">Cadastrar imóvel</button>
         </form>
@@ -312,4 +354,5 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
         <script src="../../js/dashboard.js"></script>
     </body>
+>>>>>>> 3996df26110ee69ad8c4e57d355b5bdfe2745140
 </html>
