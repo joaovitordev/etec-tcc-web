@@ -2,13 +2,9 @@
 // Sessão
 session_start();
 // Conexão
-<<<<<<< HEAD
 require_once '../connect.php';
 
 if (isset($_POST['btn-deletar'])) :
-=======
-require_once '../../connect.php';
->>>>>>> d2dd93ce18caa4c8d043b4dcf6f22b5dbf15ac63
 
 	$id = mysqli_escape_string($connect, $_POST['id_property']);
 

@@ -2,11 +2,7 @@
 // Message
 include_once 'includes/message.php';
 // Conexão
-<<<<<<< HEAD
 include_once 'connect.php';
-=======
-include_once '../connect.php';
->>>>>>> d2dd93ce18caa4c8d043b4dcf6f22b5dbf15ac63
 ?>
 
 <!doctype html>
