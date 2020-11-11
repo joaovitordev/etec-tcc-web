@@ -18,6 +18,7 @@ function clear($input) {
 */
 
 if(isset($_POST['btn-new-owner'])):
+
 	// Dados do Proprietário
 	$name = clear($_POST['owner-name']);
 	$cpf = clear($_POST['owner-cpf']);
@@ -27,15 +28,11 @@ if(isset($_POST['btn-new-owner'])):
 	$facebook = clear($_POST['owner-facebook']);
 	$instagram = clear($_POST['owner-instagram']);
 
-	// Inserindo os dados do Proprietário
-	$sql = "INSERT INTO owner (id_owner, full_name, cpf , email, telephone, whatsapp, facebook, instagram) VALUES (null, '$name', '$cpf', '$email', '$telephone','$whatsapp','$facebook','$instagram'); ";
 	// Pesquisando no banco pelo id do owner
-	$selectSql = "";
-	$selectSql = "SELECT owner.id_owner FROM owner WHERE full_name = '$name'";
+	$selectOwnerSql = "SELECT owner.id_owner FROM owner WHERE full_name = '$name'";
 
-	$ownerSql = mysqli_query($connect, $selectSql);
-
-	if(mysqli_num_rows($ownerSql) > 0):
+	$ownerSelect = mysqli_query($connect, $selectOwnerSql);
+	if(mysqli_num_rows($ownerSelect) > 0):
 		/*
 			Esse bloco irá fazer a checagem na tabela do proprietário(owner)
 			no banco para verificar se já existe um registro com o mesmo id.
@@ -46,78 +43,53 @@ if(isset($_POST['btn-new-owner'])):
 			banco, então ele irá cadastrar o novo proprietário(owner) e armazenar
 			seu id em uma variável para ser usada na chamada de uma tabela dependente.
 		*/
-		while ($ownerRow = mysqli_fetch_assoc($ownerSql)){
+		while ($ownerRow = mysqli_fetch_assoc($ownerSelect)):
 			// Caso proprietário já exista, tras o ID.
-			$ownerId = $ownerRow["id_owner"]; 
-		}
+			$ownerId = $ownerRow['id_owner']; 
+		endwhile;
 	else:
+		// Inserindo os dados do Proprietário
+		$ownerSql = "INSERT INTO owner (full_name, cpf , email, telephone, whatsapp, facebook, instagram) VALUES ('$name', '$cpf', '$email', '$telephone','$whatsapp','$facebook','$instagram'); ";
 		// Salvando o novo proprietário e pegando seu ID
-		$newOwnerSql = mysqli_query($connect, $sql);
-		if (mysqli_num_rows($newOwnerSql) > 0):
-			while($newOwnerRow = mysqli_fetch_assoc($newOwnerSql)) {
+		$newOwnerSql = mysqli_query($connect, $ownerSql);
+		if ($newOwnerSql):
 				// Armazenando novo ID cadastrado.
-				$ownerId = $newOwnerRow["id_owner"];
-			}
+				$ownerId = mysqli_insert_id($connect);
+				var_dump($ownerId);
 			$_SESSION['mensagem'] = "Proprietário cadastrado com sucesso!";
 		else:
 			$_SESSION['mensagem'] = "Erro ao cadastrar um novo proprietário";
 		endif;
-	endif;	
-endif;
-
-/*
-	Salvando os dados de um novo endereço no banco
-*/
-
-if(isset($_POST['btn-new-owner'])):
+	endif;
+	
 	// Dados do Endereço
-	$zipcode = clear($_POST['address-zipcode']);
+	$zipCode = clear($_POST['address-zipcode']);
 	$street = clear($_POST['address-street']);
-	$number = clear($_POST['address-number']);
+	$addressNumber = clear($_POST['address-number']);
 	$neighborhood = clear($_POST['address-neighborhood']);
 	$city = clear($_POST['address-city']);
 	$state = clear($_POST['address-state']);
 
-	// Inserindo os dados do endereço
-	$addressSql = "INSERT INTO address (id_address, zipcode, street, address_number, neighborhood, city, address_state) VALUES (null, '$zipcode', '$street', '$number', '$neighborhood', '$city', '$state')";
+	$selectAddressSql = "SELECT id_address FROM address WHERE address_number = '$addressNumber'; ";
 
-	// Pesquisando no banco pelo id do endereço
-	$selectSql = "";
-	$selectSql = "SELECT address.id_address FROM address WHERE address_number = '$number'";
-
-	$selectAddressSql = mysqli_query($connect, $selectSql);
-
-	if(mysqli_num_rows($selectAddressSql) > 0):
-		/*
-			Assim como no comando para cadastrar um novo proprietário
-			esse bloco irá fazer o mesmo processo com o endereço(address).
-		*/
-		while ($addressRow = mysqli_fetch_assoc($selectAddressSql)){
-			// Caso endereço já exista, tras o ID.
-			$addressId = $addressRow["id_address"]; 
-		}
+	$addressSelect = mysqli_query($connect, $selectAddressSql);
+	if(mysqli_num_rows($addressSelect) > 0):
+		while($addressRow = mysqli_fetch_assoc($addressSelect)):
+			$addressId = $addressRow['id_address'];
+		endwhile;
 	else:
-		// Salvando o novo proprietário e pegando seu ID
+		$addressSql = "INSERT INTO address (zipcode, street, address_number, neighborhood, city, state) VALUES ('$zipCode', '$street', '$addressNumber', '$neighborhood', '$city', '$state'); ";
 		$newAddressSql = mysqli_query($connect, $addressSql);
-		if (mysqli_num_rows($newAddressSql) > 0):
-			while($newAddressRow = mysqli_fetch_assoc($newAddressSql)) {
-				// Armazenando novo ID cadastrado.
-				$addressId = $newAddressRow["id_address"];
-			}
+		if ($newAddressSql):
+			$addressId = mysqli_insert_id($connect);
+			var_dump($addressId);
 			$_SESSION['mensagem'] = "Endereço cadastrado com sucesso!";
 		else:
 			$_SESSION['mensagem'] = "Erro ao cadastrar um novo Endereço!";
-		endif;
+		endif;		
 	endif;
-endif;
-
-/*
-	Salvando os dados de uma nova propriedade no banco
-*/
-
-if(isset($_POST['btn-new-owner'])):
 	// Dados da propriedade
-	$title = clear($_POST['property-room']);
+	$title = clear($_POST['property-title']);
 	$contract = clear($_POST['property-contract']);
 	$children = clear($_POST['property-children']);
 	$pets = clear($_POST['property-pets']);
@@ -131,63 +103,48 @@ if(isset($_POST['btn-new-owner'])):
 	$kitchen = clear($_POST['property-kitchen']);
 	$bathroom = clear($_POST['property-bathroom']);
 	$garage = clear($_POST['property-garage']);
-
-	// inserindo os dados da Propriedade
-	$propertySql = "INSERT INTO property (id_property, title, property_contract, children, pets, individual, energy, water, monthly_payment, deposit, room, bedroom, kitchen, bathroom, garage, id_address, id_owner) VALUES (null, $title, '$contract, $children, $pets, $individual, $energy, $water, $monthlyPayment, $deposit, $room, $bedroom, $kitchen, $bathroom, $garage, $addressId, $ownerId)";
 	
-	// Pesquisando no banco pelo id da propriedade.
-	$selectSql = "";
-	$selectSql = "SELECT property.id_property FROM address WHERE property.id_address = $addressId AND property.id_owner = $ownerId";
-
-	$selectPropertySql = mysqli_query($connect, $selectSql);
-
-	if(mysqli_num_rows($selectPropertySql) > 0):
-		/*
-			Assim como no comando para cadastrar um novo proprietário
-			esse bloco irá fazer o mesmo processo com a propriedade/casa(property).
-		*/
-		while ($propertyRow = mysqli_fetch_assoc($selectPropertySql)){
-			// Caso endereço já exista, tras o ID.
-			$propertyId = $propertyRow["id_property"]; 
-		}
+	$selectPropertySql = "SELECT id_property FROM property WHERE id_address = $addressId AND id_owner = $ownerId; ";
+	
+	$propertySelect = mysqli_query($connect, $selectPropertySql);
+	if(mysqli_num_rows($propertySelect) > 0):
+		while ($propertyRow = mysqli_fetch_assoc($propertySelect)):
+			$propertyId = $propertyRow['id_property'];
+		endwhile;
 	else:
-		// Salvando o novo proprietário e pegando seu ID
+		$propertySql = "INSERT INTO property (title, property_contract, children, pets, individual, energy, water, monthly_payment, deposit, room, bedroom, kitchen, bathroom, garage, id_address, id_owner) VALUES ('$title', '$contract', '$children', '$pets', '$individual', '$energy', '$water', '$monthlyPayment', '$deposit', '$room', '$bedroom', '$kitchen', '$bathroom', '$garage', '$addressId', '$ownerId'); ";
+
 		$newPropertySql = mysqli_query($connect, $propertySql);
-		if (mysqli_num_rows($newPropertySql) > 0):
-			while($newPropertyRow = mysqli_fetch_assoc($newPropertySql)) {
-				// Armazenando novo ID cadastrado.
-				$propertyId = $newPropertyRow["id_property"];
-			}
+		if($newPropertySql):
+			$propertyId = mysqli_insert_id($connect);
+			var_dump($propertyId);
 			$_SESSION['mensagem'] = "Propriedade cadastrada com sucesso!";
 		else:
 			$_SESSION['mensagem'] = "Erro ao cadastrar uma nova Propriedade!";
 		endif;
 	endif;
-endif;
 
-/*
-	Salvando Imagens da Propriedade
-*/
-if(isset($_POST['btn-new-owner'])):
+	/*
+		Salvando Imagens da Propriedade
+	*/
 	// Fazendo o upload de arquivos sem o compouser/uploader.
-	/* $formatsAccepted = array("jpg", "jpeg", "png");
+	$formatsAccepted = array("jpg", "jpeg", "png");
 	$quantityArchive = count($_FILES['arquivo']['name']);
 	$counter = 0;
 
 	while($counter < $quantityArchive):
-		$extension = pathinfo($_FILES['arquivo']['name'], PATHINFO_EXTENSION);
+		$extension = pathinfo($_FILES['arquivo']['name'][$counter], PATHINFO_EXTENSION);
 	
 		if(in_array($extension, $formatsAccepted)):
 			$folder = "arquivo/";
-			$temporary = $_FILES['arquivo']['tmp_name'];
-			$newName = uniqid()."$extension";
+			$temporary = $_FILES['arquivo']['tmp_name'][$counter];
+			$newName = uniqid().".$extension";
 
-			if(move_uploaded_file($extension, $folder.$newName)):
-
+			if(move_uploaded_file($temporary, $folder.$newName)):
 				// Dados do Proprietário
-				$url = clear($_POST['property-images']);
+				$url = $newName;
 				// Inserindo os dados do Proprietário
-				$imageSql = "INSERT INTO images (id_image, url, id_property) VALUES (null, $url, $propertyId)";
+				$imageSql = "INSERT INTO images (id_image, url, id_property) VALUES (null, '$url', $propertyId)";
 
 				if(mysqli_query($connect, $imageSql)):
 					$_SESSION['mensagem'] = "Imagens cadastradas com sucesso!";
@@ -196,15 +153,15 @@ if(isset($_POST['btn-new-owner'])):
 				endif;
 			else:
 				$_SESSION['mensagem'] = "Formato de arquivo inválido. Somente imagens são aceitas.";
-			endif	
+			endif;	
 		endif;
 		$counter++;
-	endwhile; */
+	endwhile;
 
 	// Fazendo upload de imagens multiplas utilizando o uploarder via composer
-
+	/*
 	// Utilizando do Uploader para fazer o objeto da imagem que será upada e salva no banco.
-	$upload = new \CoffeeCoder\Uploarder\Image(uploadDir:"storage", fileTypeDir:"images");  
+	$upload = new \CoffeeCoder\Uploarder\Image(uploadDir: "storage", fileTypeDir: "images");  
 	$files = $_FILES; // Várivel global para upload de arquivos.
 	
 	// Checando se a variável files está vazia.
@@ -235,7 +192,7 @@ if(isset($_POST['btn-new-owner'])):
 					$_SESSION['mensagem'] = "Imagens cadastradas com sucesso!";
 				else:
 					$_SESSION['mensagem'] = "Erro ao cadastrar uma ou mais nova(s) Imagem(ns)!";
-				endif;""
+				endif;
 			endif
 			/*
 				// Dados do Proprietário
@@ -247,10 +204,10 @@ if(isset($_POST['btn-new-owner'])):
 				else:
 					$_SESSION['mensagem'] = "Erro ao cadastrar uma ou mais nova(s) Imagem(ns)!";
 				endif;
-			*/	
 		endforeach;
-	endif; 		
+	endif;*/
+			
 endif;
 
 mysqli_close($connect);
-header('Location: ../index.php');
+// header('Location: ../index.php');

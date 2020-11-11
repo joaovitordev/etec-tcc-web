@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -59,57 +58,25 @@
                 <svg width="1em" class="back-button" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
                 </svg>
-                <h1 class="title-home-page">Novo imóvel</h1>
-
+                <h1 class="title-home-page">Atualizar Imóvel</h1>
             </div>
         </nav>
-
-        <form action="../php_action/create.php" method="POST" enctype="multipart/form-data">
-        <div class="owner-section">
-                <h4>Informações do propietário</h4>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputPassword4">Nome do propietário</label>
-                        <input type="text" name="owner-name" class="form-control" id="inputPassword4" placeholder="Ronaldinho Gaucho">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="inputEmail4">CPF</label>
-                        <input type="text" name="owner-cpf" class="form-control" id="inputEmail4" placeholder="Número do CPF" onblur="validaCPF();">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="inputEmail4">Telefone</label>
-                        <input type="text" name="owner-telephone" class="form-control" id="inputEmail4" placeholder="(11) 58964213">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputPassword4">WhatsApp</label>
-                        <input type="text" name="owner-whatsapp" class="form-control" id="inputPassword4" placeholder="(11) 975629553">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputPassword4">Email</label>
-                        <input type="email" name="owner-email" class="form-control" id="inputPassword4" placeholder="ronaldinho@gmail.com">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputPassword4">Facebook</label>
-                        <input type="text" name="owner-facebook" class="form-control" id="inputPassword4" placeholder="Link do Facebook">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="inputEmail4">Instagram</label>
-                        <input type="text" name="owner-instagram" class="form-control" id="inputEmail4" placeholder="Link do Instagram">
-                    </div>
-                </div>
-            </div>
+        <form action="../php_action/update.php" method="POST" enctype="multpart/form-data">
+            <?php
+                require_once 'connect.php';
+                $id = $_GET['id']
+                $select 
+            
+            ?>
             <div class="property-section">
                 <h4>Informações da casa</h4>
                 <h6>Endereço</h6>
                 <div class="form-row">
+                    <input type="hidden" name="address-id" /> 
                     <div class="form-group col-md-2">
                         <label for="inputCEP">CEP</label>
                         <input type="text" size="10" maxlength="9" onblur="pesquisacep(this.value);"
-                            class="form-control" id="cep" name="address-zipcode">
+                            class="form-control" id="cep" name="address-zipcode" value="<?php echo $_POST['address-zipcode']; ?>">
                     </div>
                     <div class="form-group col-md-8">
                         <label for="inputCity">Rua</label>
@@ -117,7 +84,7 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputCity">Número</label>
-                        <input type="text" class="form-control" id="validationCustom03" name="address-number" required>
+                        <input type="text" class="form-control" id="validationCustom03" name="address-number" value="<?php echo $_POST['address-number']; ?>" required>
                     </div>
                 </div>
                 <div class="form-row">
@@ -136,13 +103,14 @@
                 </div>
                 <h6>Comodos</h6>
                 <div class="form-row">
+                    <input type="hidden" name="property-id" />
                     <div class="form-group col-md-12">
                         <label for="inputTitle">Descrição</label>
-                        <input type="text" class="form-control" id="title" name="property-title">
+                        <input type="text" class="form-control" id="title" name="property-title" value="<?php echo $_POST['property-title']; ?>">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputEstado">Sala</label>
-                        <select id="inputEstado" class="form-control" name="property-room">
+                        <select id="inputEstado" class="form-control" name="property-room" value="<?php echo $_POST['property-room']; ?>">
                             <option>0</option>
                             <option>1</option>
                             <option>2</option>
@@ -153,7 +121,7 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputEstado">Quarto</label>
-                        <select id="inputEstado" class="form-control" name="property-bedroom">
+                        <select id="inputEstado" class="form-control" name="property-bedroom" value="<?php echo $_POST['property-bedroom']; ?>">
                             <option>0</option>
                             <option>1</option>
                             <option>2</option>
@@ -164,7 +132,7 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputEstado">Cozinha</label>
-                        <select id="inputEstado" class="form-control" name="property-kitchen">
+                        <select id="inputEstado" class="form-control" name="property-kitchen" value="<?php echo $_POST['property-kitchen']; ?>">
                             <option>0</option>
                             <option>1</option>
                             <option>2</option>
@@ -175,7 +143,7 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputEstado">Banheiro</label>
-                        <select id="inputEstado" class="form-control" name="property-bathroom">
+                        <select id="inputEstado" class="form-control" name="property-bathroom" value="<?php echo $_POST['property-bathroom']; ?>">
                             <option>0</option>
                             <option>1</option>
                             <option>2</option>
@@ -186,7 +154,7 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputEstado">Garagem</label>
-                        <select id="inputEstado" class="form-control" name="property-garage">
+                        <select id="inputEstado" class="form-control" name="property-garage" value="<?php echo $_POST['property-garage']; ?>">
                             <option>0</option>
                             <option>1</option>
                             <option>2</option>
@@ -202,11 +170,11 @@
                         <label for="inputEstado">Crianças</label>
                         <br>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="property-children" id="inlineRadio1" value="1">
+                            <input class="form-check-input" type="radio" name="property-children" id="inlineRadio1" value="opcao1" >
                             <label class="form-check-label" for="inlineRadio1">Sim</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="property-children" id="inlineRadio2" value="0">
+                            <input class="form-check-input" type="radio" name="property-children" id="inlineRadio2" value="opcao2">
                             <label class="form-check-label" for="inlineRadio2">Não</label>
                         </div>
                     </div>
@@ -214,11 +182,11 @@
                             <label for="inputEstado">Animais</label>
                             <br>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="property-pets" id="inlineRadio3" value="1">
+                                <input class="form-check-input" type="radio" name="property-pets" id="inlineRadio3" value="opcao3">
                                 <label class="form-check-label" for="inlineRadio3">Sim</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="property-pets" id="inlineRadio4" value="0">
+                                <input class="form-check-input" type="radio" name="property-pets" id="inlineRadio4" value="opcao4">
                                 <label class="form-check-label" for="inlineRadio4">Não</label>
                                 </div>
                         </div>
@@ -226,11 +194,11 @@
                             <label for="inputEstado">Quintal</label>
                             <br>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="property-individual" id="inlineRadio5" value="1">
+                                <input class="form-check-input" type="radio" name="property-individual" id="inlineRadio5" value="opcao5">
                                 <label class="form-check-label" for="inlineRadio5">Sim</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="property-individual" id="inlineRadio6" value="0">
+                                <input class="form-check-input" type="radio" name="property-individual" id="inlineRadio6" value="opcao6">
                                 <label class="form-check-label" for="inlineRadio6">Não</label>
                                 </div>
                         </div>
@@ -238,11 +206,11 @@
                             <label for="inputEstado">Energia</label>
                             <br>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="property-energy" id="inlineRadio7" value="1">
+                                <input class="form-check-input" type="radio" name="property-energy" id="inlineRadio7" value="opcao7">
                                 <label class="form-check-label" for="inlineRadio7">Sim</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="property-energy" id="inlineRadio8" value="0">
+                                <input class="form-check-input" type="radio" name="property-energy" id="inlineRadio8" value="opcao8">
                                 <label class="form-check-label" for="inlineRadio8">Não</label>
                                 </div>
 
@@ -251,11 +219,11 @@
                             <label for="inputEstado">Água</label>
                             <br>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="property-water" id="inlineRadio9" value="1">
+                                <input class="form-check-input" type="radio" name="property-water" id="inlineRadio9" value="opcao9">
                                 <label class="form-check-label" for="inlineRadio9">Sim</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="property-water" id="inlineRadio10" value="0">
+                                <input class="form-check-input" type="radio" name="property-water" id="inlineRadio10" value="opcao10">
                                 <label class="form-check-label" for="inlineRadio10">Não</label>
                                 </div>
 
@@ -264,11 +232,11 @@
                             <label for="inputEstado">Contrato</label>
                             <br>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="property-contract" id="inlineRadio11" value="1">
+                                <input class="form-check-input" type="radio" name="property-contract" id="inlineRadio11" value="opcao11">
                                 <label class="form-check-label" for="inlineRadio11">Sim</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="property-contract" id="inlineRadio12" value="0">
+                                <input class="form-check-input" type="radio" name="property-contract" id="inlineRadio12" value="opcao12">
                                 <label class="form-check-label" for="inlineRadio12">Não</label>
                                 </div>
                         </div>
@@ -288,16 +256,16 @@
                 <div class="images-section">
                     <div class="form-row">
                         <div class="form-group col-md-10">
-                            <label for="inputImage">Imagens</label>
+                            <label for="inputCEP">Imagens</label>
                             <div class="form-group">
                                 <label for="exampleFormControlFile1">Imagens selecionadas</label>
-                                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="arquivo[]" accept="image/jpg, image/jpeg, image/png" multiple>
+                                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="property-images[]" accept="image/jpg, image/jpeg, image/png" multiple>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-new-property" name="btn-new-owner">Cadastrar imóvel</button>
+            <button type="submit" class="btn btn-new-property" name="btn-update-owner">Atualizar Imovel</button>
         </form>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
         <script>
