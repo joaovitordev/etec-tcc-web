@@ -2,7 +2,7 @@
 // Sessão
 session_start();
 // Conexão
-require_once '../../connect.php';
+require_once '../connect.php';
 // Clear
 function clear($input) {
 	global $connect;
@@ -210,4 +210,4 @@ if(isset($_POST['btn-new-owner'])):
 endif;
 
 mysqli_close($connect);
-// header('Location: ../index.php');
+header('Location: ../index.php');

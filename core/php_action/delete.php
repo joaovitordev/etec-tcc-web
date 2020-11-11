@@ -2,19 +2,24 @@
 // Sessão
 session_start();
 // Conexão
-require_once '../bd/connect.php';
+require_once '../connect.php';
 
-if(isset($_POST['btn-deletar'])):
-	
+if (isset($_POST['btn-deletar'])) :
+
 	$id = mysqli_escape_string($connect, $_POST['id_property']);
 
-	$sql = "DELETE FROM property WHERE id_property = '$id'";
+	$sql = "DELETE FROM property, owner, address, images 
+				USING property
+  				inner JOIN owner ON (property.id_owner = owner.id_owner) 
+  				inner JOIN address ON (property.id_address = address.id_address)  
+  				INNER JOIN images ON (images.id_property = property.id_property)
+				WHERE property.id_property = '$id';";
 
-	if(mysqli_query($connect, $sql)):
+	if (mysqli_query($connect, $sql)) :
 		$_SESSION['mensagem'] = "Deletado com sucesso!";
 		header('Location: ../index.php');
-	else:
+	else :
 		$_SESSION['mensagem'] = "Erro ao deletar";
-		header('Location: ../index.php');
+		echo $sql;
 	endif;
 endif;
