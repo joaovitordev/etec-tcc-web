@@ -15,11 +15,6 @@ body {
     margin-right: 4%;
   }
   
-  
-  .second-navbar {
-    
-  }
-  
   #title-off {
     display: none;
   }
@@ -27,13 +22,7 @@ body {
   .title-home-page {
     font-size: 25px;
   }
-  
-  svg {
-    font-size: 15px;
-    margin-top: -4px;
-    margin-right: 3px;
-  }
-  
+
   .second-navbar-itens {
     display: flex;
     justify-content: space-between;
@@ -42,8 +31,13 @@ body {
     margin-left: 5%;
   }
   
-  .btn-novo-imovel {
+  .btn-novo-imovel, .btn-novo-imovel:hover {
     height: 30px;
+    background-color: #fc5c65 !important;
+    color: #ffffff;
+  }
+
+  .btn-modal-delete-primary, .btn-modal-delete-primary:hover {
     background-color: #fc5c65 !important;
     color: #ffffff;
   }
@@ -119,7 +113,7 @@ img {
   border-radius: 5px;
 }
 
-.modal-dialog {
+.modal-full {
   max-width: 90% !important;
   max-height: 90% !important;
 }
@@ -134,4 +128,33 @@ img {
   background-color: #f5f7f9;
   border-radius: 5px;
   margin: 5px;
+}
+
+.btn-back, .btn-back:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.card {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 28px !important;
+}
+
+.card-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-icon-list-person {
+  color: #fc5c65;
+}
+.card-icon-list-map {
+  color: #fc5c65;
+  font-size: 16px;
 }

@@ -1,8 +1,7 @@
 <?php
-// Message
-include_once 'includes/message.php';
+
 // Conexão
-include_once '../connect.php';
+include_once 'connect.php';
 ?>
 
 <!doctype html>
@@ -49,7 +48,7 @@ include_once '../connect.php';
   <nav class="navbar navbar-expand-lg navbar-second">
     <div class="row second-navbar-itens">
       <h1 class="title-home-page">Imóveis</h1>
-      <a href="pages/new-property.php">
+      <a href="pages/property/create-property.php">
         <button type="button" class="btn btn-sm btn-novo-imovel">Novo imóvel</button>
       </a>
     </div>
@@ -76,33 +75,34 @@ include_once '../connect.php';
 
           <div class="col-3">
             <div class="card-deck">
-              <div class="card shadow-sm" style="width: 18rem;">
-                <div data-toggle="modal" data-target="#property<?php echo $dados['id_property']; ?>" class="btn-view">
-                  <svg width="1em" class="icon-view" height="1em" viewBox="0 0 16 16" class="bi bi-info-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-                  </svg>
-                </div>
-                <div data-toggle="modal" data-target="#propertyDelete<?php echo $dados['id_property']; ?>" class="btn-delete">
-                  <svg width="1em" class="icon-view" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z" />
-                  </svg>
-                </div>
-                <div data-toggle="modal" data-target="#property<?php echo $dados['id_property']; ?>" class="btn-edit">
-                  <svg width="1em" class="icon-view" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                  </svg>
-                </div>
-                <img style="width: 100%; height: 150px" src="../../imgs/<?php
-                                                                        $values = explode(',', $dados['images-property']);
-                                                                        echo $values[0];
-                                                                        ?>" class="card-img-top" alt="...">
+              <div class="card" style="width: 18rem; margin-bottom: 20px;">
+
+                <img style="width: 100%; height: 150px" src="images/<?php
+                                                                    $values = explode(',', $dados['images-property']);
+                                                                    echo $values[0];
+                                                                    ?>" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title"><?php echo $dados['neighborhood']; ?></h5>
-                  <p class="card-text"><?php echo $dados['title']; ?></p>
+                  <h5 class="card-title"><?php echo $dados['title']; ?></h5>
+                  <p class="card-text"><i class="fas fa-map-marker-alt card-icon-list-map"></i> <?php echo $dados['street'] . ', ' . $dados['address_number'] . ', ' . $dados['neighborhood']; ?></p>
+                  <p class="card-text"><i class="fas fa-user-alt card-icon-list-person"></i> <?php echo $dados['full_name']; ?></p>
 
-
+                  <hr>
+                  <center>
+                    <div class="row">
+                      <div class="col-4">
+                        <button type="button" data-toggle="modal" data-target="#property<?php echo $dados['id_property']; ?>" class="btn btn-primary btn-sm"><i class="fas fa-expand"></i></button>
+                      </div>
+                      <div class="col-4">
+                        <button type="button" class="btn btn-warning btn-sm"><i style="color: #fff;" class="far fa-edit"></i></button>
+                      </div>
+                      <div class="col-4">
+                        <button type="button" data-toggle="modal" data-target="#propertyDelete<?php echo $dados['id_property']; ?>" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button>
+                      </div>
+                    </div>
+                  </center>
 
                 </div>
+
               </div>
             </div>
           </div>
@@ -110,32 +110,29 @@ include_once '../connect.php';
 
           <!-- Modal delete -->
           <div class="modal fade" id="propertyDelete<?php echo $dados['id_property']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-sm">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">IMÓVEL #<?php echo $dados['id_property']; ?></h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form action="php_action/delete.php" method="POST">
+                  <form action="actions/property/delete-property.php" method="POST">
                     <input type="hidden" name="id_property" value="<?php echo $dados['id_property']; ?>">
-
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" name="btn-deletar" class="btn btn-primary">Sim, quero deletar</button>
-
+                    <p>Deseja realmente deletar o imóvel?</p>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" name="btn-deletar" class="btn btn-sm btn-modal-delete-primary">Sim, quero deletar</button>
                   </form>
                 </div>
               </div>
             </div>
           </div>
 
-
-
           <!-- Modal view -->
           <div class="modal fade" id="property<?php echo $dados['id_property']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-full">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLabel">IMÓVEL #<?php echo $dados['id_property']; ?></h5>
@@ -147,11 +144,11 @@ include_once '../connect.php';
                   <div class="row justify-content-md-center">
                     <div class="col-sm card-carrousel">
                       <h2 class="title-profile"><?php echo $dados['title']; ?></h2>
-                      <img class="img-profile" src="../../imgs/<?php $values = explode(',', $dados['images-property']);
-                                                                echo $values[0]; ?>">
+                      <img class="img-profile" src="images/<?php $values = explode(',', $dados['images-property']);
+                                                            echo $values[0]; ?>">
                     </div>
                     <div class="col-sm card-maps">
-                      <h2 class="title-profile"><?php echo $dados['street'] . ', ' . $dados['number'] . ', ' . $dados['neighborhood']; ?></h2>
+                      <h2 class="title-profile"><?php echo $dados['street'] . ', ' . $dados['address_number'] . ', ' . $dados['neighborhood']; ?></h2>
                       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.5487542084106!2d-46.762753785379466!3d-23.72780317364409!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce4dc3b2a400db%3A0xe5c47c26359d478a!2sAv.%20Caporanga%2C%20269%20-%20Cidade%20Ipava%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2004951-010!5e0!3m2!1spt-BR!2sbr!4v1604960018160!5m2!1spt-BR!2sbr" width="90%" height="200" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
                     </div>
                   </div>
@@ -187,7 +184,7 @@ include_once '../connect.php';
                         <i class="fas fa-file-contract icons-grid"></i>
                         <p>
                           <?php
-                          if ($dados['contract'] === 1) {
+                          if ($dados['property_contract'] === 1) {
                             echo 'Tem contrato';
                           } else {
                             echo 'Não tem contrato';
@@ -295,7 +292,6 @@ include_once '../connect.php';
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <script src="js/dashboard.js"></script>
 </body>
 
 </html>

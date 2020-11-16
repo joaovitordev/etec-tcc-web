@@ -5,6 +5,7 @@
     background-color: #ffffff;
     padding: 20px;
     border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 28px !important;
 }
 
 .images-section {
@@ -14,13 +15,16 @@
     background-color: #ffffff;
     padding: 20px;
     border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 28px !important;
 }
 
-.btn-new-property {
+.btn-new-property, .btn-new-property:hover {
     margin: 33px;
     margin-left: 5%;
     background-color: #fc5c65 !important;
     color: #ffffff;
+    width: 90%;
+    font-size: 20px;
 }
 
 .back-button {
