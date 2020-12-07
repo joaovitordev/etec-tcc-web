@@ -21,6 +21,7 @@ include_once 'connect.php';
 
   <!-- Custom styles for this template -->
   <link href="css/styles.css" rel="stylesheet">
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 </head>
 
 <body>
@@ -56,6 +57,16 @@ include_once 'connect.php';
 
 
   <div class="container">
+
+    <br>
+    <form>
+      <div class="form-group row">
+        <div class="col-sm-12">
+          <input type="text" placeholder="Buscar..." class="form-control" id="inputPassword">
+        </div>
+      </div>
+    </form>
+
     <br>
     <div class="row">
       <?php
@@ -149,7 +160,34 @@ include_once 'connect.php';
                     </div>
                     <div class="col-sm card-maps">
                       <h2 class="title-profile"><?php echo $dados['street'] . ', ' . $dados['address_number'] . ', ' . $dados['neighborhood']; ?></h2>
-                      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.5487542084106!2d-46.762753785379466!3d-23.72780317364409!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce4dc3b2a400db%3A0xe5c47c26359d478a!2sAv.%20Caporanga%2C%20269%20-%20Cidade%20Ipava%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2004951-010!5e0!3m2!1spt-BR!2sbr!4v1604960018160!5m2!1spt-BR!2sbr" width="90%" height="200" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                      <div id="mapid" style="width: 600px; height: 400px;"></div>
+                      <script>
+                        var mymap = L.map('mapid').setView([-23.7259572, -46.7580792], 13);
+
+                        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+                          maxZoom: 18,
+                          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+                            '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                            'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                          id: 'mapbox/streets-v11',
+                          tileSize: 512,
+                          zoomOffset: -1
+                        }).addTo(mymap);
+
+                        L.marker([-23.7259572, -46.7580792]).addTo(mymap)
+
+
+                        var popup = L.popup();
+
+                        function onMapClick(e) {
+                          popup
+                            .setLatLng(e.latlng)
+                            .setContent("You clicked the map at " + e.latlng.toString())
+                            .openOn(mymap);
+                        }
+
+                        mymap.on('click', onMapClick);
+                      </script>
                     </div>
                   </div>
                   <br>
