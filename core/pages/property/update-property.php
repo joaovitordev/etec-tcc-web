@@ -27,9 +27,9 @@
             }
         </style>
         <!-- Custom styles for this template -->
-        <link href="../css/styles.css" rel="stylesheet">
-        <link rel="stylesheet" href="../css/new-property.css">
-        <script src="../js/validators.js"></script>
+        <link href="../../css/styles.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/new-property.css">
+        <script src="../../js/validators.js"></script>
     </head>
 
     <body>
@@ -61,22 +61,43 @@
                 <h1 class="title-home-page">Atualizar Imóvel</h1>
             </div>
         </nav>
-        <form action="../php_action/update.php" method="POST" enctype="multpart/form-data">
+        <form action="../../actions/property/update-property.php" method="POST" enctype="multipart/form-data">
             <?php
-                require_once 'connect.php';
-                $id = $_GET['id']
-                $select 
+                require_once '../../connect.php';
+
+                    // criando um array para mostrar no formulario os itens cadastrados
+
+                    //array da tabela property
+                    $id = mysqli_escape_string($connect, $_GET['id']);
+                    $sql = "SELECT * FROM property WHERE id_property = '$id'";
+                    $resultado = mysqli_query($connect, $sql);
+                    $dados = mysqli_fetch_array($resultado);
+
+                    //array da tabela address
+                    $idAddress = mysqli_escape_string($connect, $_GET['idAddress']);
+                    $sqlAddress = "SELECT * FROM address WHERE id_address = '$idAddress'";
+                    $resultadoAddress = mysqli_query($connect, $sqlAddress);
+                    $dadosAddress = mysqli_fetch_array($resultadoAddress);
+
+                    //array da tabela images
+                    $sqlImg = "SELECT * FROM images WHERE id_property = '$id'";
+                    $resultadoImg = mysqli_query($connect,$sqlImg);
+                    $dadosImg = mysqli_fetch_array($resultadoImg);
+                   
+
+
             
             ?>
             <div class="property-section">
                 <h4>Informações da casa</h4>
                 <h6>Endereço</h6>
                 <div class="form-row">
-                    <input type="hidden" name="address-id" /> 
+                    <input type="hidden" name="address-id" value ="<?php echo $dadosAddress['id_address']?>"> 
+
                     <div class="form-group col-md-2">
                         <label for="inputCEP">CEP</label>
                         <input type="text" size="10" maxlength="9" onblur="pesquisacep(this.value);"
-                            class="form-control" id="cep" name="address-zipcode" value="<?php echo $_POST['address-zipcode']; ?>">
+                            class="form-control" id="cep" name="address-zipcode" value="<?php echo $dadosAddress['zipcode']; ?>">
                     </div>
                     <div class="form-group col-md-8">
                         <label for="inputCity">Rua</label>
@@ -84,83 +105,91 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputCity">Número</label>
-                        <input type="text" class="form-control" id="validationCustom03" name="address-number" value="<?php echo $_POST['address-number']; ?>" required>
+                        <input type="text" class="form-control" id="validationCustom03" name="address-number" value="<?php echo $dadosAddress['address_number']; ?>" required>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="inputCity">Bairro</label>
-                        <input type="text" class="form-control" id="bairro" name="address-neighborhood" readonly>
+                        <input type="text" class="form-control" id="bairro" name="address-neighborhood" readonly >
                     </div>
                     <div class="form-group col-md-4">
                         <label for="inputCity">Cidade</label>
-                        <input type="text" class="form-control" id="cidade" name="address-city" readonly>
+                        <input type="text" class="form-control" id="cidade" name="address-city" readonly >
                     </div>
                     <div class="form-group col-md-4">
                         <label for="inputCity">Estado</label>
-                        <input type="text" class="form-control" id="uf" name="address-state" readonly>
+                        <input type="text" class="form-control" id="uf" name="address-state" readonly > 
+                    </div>
+                    <div class="form-group col-md-2">
+                    <label for="inputCity">Latitude</label>
+                    <input type="text" class="form-control" id="lat" name="address-lat" readonly>
+                    </div>
+                    <div class="form-group col-md-2">
+                    <label for="inputCity">Longitude</label>
+                    <input type="text" class="form-control" id="lon" name="address-lon" readonly>
                     </div>
                 </div>
                 <h6>Comodos</h6>
                 <div class="form-row">
-                    <input type="hidden" name="property-id" />
+                    <input type="hidden" name="property-id" value ="<?php echo $dados['id_property']?>" />
                     <div class="form-group col-md-12">
                         <label for="inputTitle">Descrição</label>
-                        <input type="text" class="form-control" id="title" name="property-title" value="<?php echo $_POST['property-title']; ?>">
+                        <input type="text" class="form-control" id="title" name="property-title" value="<?php echo $dados['title']; ?>">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputEstado">Sala</label>
-                        <select id="inputEstado" class="form-control" name="property-room" value="<?php echo $_POST['property-room']; ?>">
+                        <select id="inputEstado" class="form-control" name="property-room" value="<?php echo $dados['room']; ?>">
                             <option>0</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                            <option value="1"; <?= ($dados['room'] == '1')?'selected':''?> >1</option>
+                            <option value="2"; <?= ($dados['room'] == '2')?'selected':''?> >2</option>
+                            <option value="3"; <?= ($dados['room'] == '3')?'selected':''?> >3</option>
+                            <option value="4"; <?= ($dados['room'] == '4')?'selected':''?> >4</option>
+                            <option value="5"; <?= ($dados['room'] == '5')?'selected':''?> >5</option>
                         </select>
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputEstado">Quarto</label>
-                        <select id="inputEstado" class="form-control" name="property-bedroom" value="<?php echo $_POST['property-bedroom']; ?>">
+                        <select id="inputEstado" class="form-control" name="property-bedroom" value="<?php echo $dados['bedroom']; ?>">
                             <option>0</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                            <option value="1"; <?= ($dados['bedroom'] == '1')?'selected':''?> >1</option>
+                            <option value="2"; <?= ($dados['bedroom'] == '2')?'selected':''?> >2</option>
+                            <option value="3"; <?= ($dados['bedroom'] == '3')?'selected':''?> >3</option>
+                            <option value="4"; <?= ($dados['bedroom'] == '4')?'selected':''?> >4</option>
+                            <option value="5"; <?= ($dados['bedroom'] == '5')?'selected':''?> >5</option>
                         </select>
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputEstado">Cozinha</label>
-                        <select id="inputEstado" class="form-control" name="property-kitchen" value="<?php echo $_POST['property-kitchen']; ?>">
+                        <select id="inputEstado" class="form-control" name="property-kitchen" value="<?php echo $dados['kitchen']; ?>">
                             <option>0</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                            <option value="1"; <?= ($dados['kitchen'] == '1')?'selected':''?> >1</option>
+                            <option value="2"; <?= ($dados['kitchen'] == '2')?'selected':''?> >2</option>
+                            <option value="3"; <?= ($dados['kitchen'] == '3')?'selected':''?> >3</option>
+                            <option value="4"; <?= ($dados['kitchen'] == '4')?'selected':''?> >4</option>
+                            <option value="5"; <?= ($dados['kitchen'] == '5')?'selected':''?> >5</option>
                         </select>
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputEstado">Banheiro</label>
-                        <select id="inputEstado" class="form-control" name="property-bathroom" value="<?php echo $_POST['property-bathroom']; ?>">
+                        <select id="inputEstado" class="form-control" name="property-bathroom" value="<?php echo $dados['bathroom']; ?>">
                             <option>0</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                            <option value="1"; <?= ($dados['bathroom'] == '1')?'selected':''?> >1</option>
+                            <option value="2"; <?= ($dados['bathroom'] == '2')?'selected':''?> >2</option>
+                            <option value="3"; <?= ($dados['bathroom'] == '3')?'selected':''?> >3</option>
+                            <option value="4"; <?= ($dados['bathroom'] == '4')?'selected':''?> >4</option>
+                            <option value="5"; <?= ($dados['bathroom'] == '5')?'selected':''?> >5</option>
                         </select>
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputEstado">Garagem</label>
-                        <select id="inputEstado" class="form-control" name="property-garage" value="<?php echo $_POST['property-garage']; ?>">
+                        <select id="inputEstado" class="form-control" name="property-garage" value="<?php echo $dados['garage']; ?>">
                             <option>0</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                            <option value="1"; <?= ($dados['garage'] == '1')?'selected':''?> >1</option>
+                            <option value="2"; <?= ($dados['garage'] == '2')?'selected':''?> >2</option>
+                            <option value="3"; <?= ($dados['garage'] == '3')?'selected':''?> >3</option>
+                            <option value="4"; <?= ($dados['garage'] == '4')?'selected':''?> >4</option>
+                            <option value="5"; <?= ($dados['garage'] == '5')?'selected':''?> >5</option>
                         </select>
                     </div>
                 </div>
@@ -170,11 +199,11 @@
                         <label for="inputEstado">Crianças</label>
                         <br>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="property-children" id="inlineRadio1" value="opcao1" >
+                            <input class="form-check-input" type="radio" name="property-children" id="inlineRadio1" value="1"; <?= ($dados['children'] == '1')?'checked':null ?>>
                             <label class="form-check-label" for="inlineRadio1">Sim</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="property-children" id="inlineRadio2" value="opcao2">
+                            <input class="form-check-input" type="radio" name="property-children" id="inlineRadio2" value="0"; <?= ($dados['children'] == '0')?'checked':null ?>>
                             <label class="form-check-label" for="inlineRadio2">Não</label>
                         </div>
                     </div>
@@ -182,23 +211,23 @@
                             <label for="inputEstado">Animais</label>
                             <br>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="property-pets" id="inlineRadio3" value="opcao3">
+                                <input class="form-check-input" type="radio" name="property-pets" id="inlineRadio3" value="1"; <?= ($dados['pets'] == '1')?'checked':null ?>>
                                 <label class="form-check-label" for="inlineRadio3">Sim</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="property-pets" id="inlineRadio4" value="opcao4">
+                                <input class="form-check-input" type="radio" name="property-pets" id="inlineRadio4" value="0"; <?= ($dados['pets'] == '0')?'checked':null ?>>
                                 <label class="form-check-label" for="inlineRadio4">Não</label>
                                 </div>
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="inputEstado">Quintal</label>
+                            <label for="inputEstado">Individual</label>
                             <br>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="property-individual" id="inlineRadio5" value="opcao5">
+                                <input class="form-check-input" type="radio" name="property-individual" id="inlineRadio5" value="1" <?= ($dados['individual'] == '1')?'checked':null ?>>
                                 <label class="form-check-label" for="inlineRadio5">Sim</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="property-individual" id="inlineRadio6" value="opcao6">
+                                <input class="form-check-input" type="radio" name="property-individual" id="inlineRadio6" value="0" <?= ($dados['individual'] == '0')?'checked':null ?>>
                                 <label class="form-check-label" for="inlineRadio6">Não</label>
                                 </div>
                         </div>
@@ -206,11 +235,11 @@
                             <label for="inputEstado">Energia</label>
                             <br>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="property-energy" id="inlineRadio7" value="opcao7">
+                                <input class="form-check-input" type="radio" name="property-energy" id="inlineRadio7" value="1" <?= ($dados['energy'] == '1')?'checked':null ?>>
                                 <label class="form-check-label" for="inlineRadio7">Sim</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="property-energy" id="inlineRadio8" value="opcao8">
+                                <input class="form-check-input" type="radio" name="property-energy" id="inlineRadio8" value="0" <?= ($dados['energy'] == '0')?'checked':null ?>>
                                 <label class="form-check-label" for="inlineRadio8">Não</label>
                                 </div>
 
@@ -219,11 +248,11 @@
                             <label for="inputEstado">Água</label>
                             <br>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="property-water" id="inlineRadio9" value="opcao9">
+                                <input class="form-check-input" type="radio" name="property-water" id="inlineRadio9" value="1" <?= ($dados['water'] == '1')?'checked':null ?>>
                                 <label class="form-check-label" for="inlineRadio9">Sim</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="property-water" id="inlineRadio10" value="opcao10">
+                                <input class="form-check-input" type="radio" name="property-water" id="inlineRadio10" value="0" <?= ($dados['water'] == '0')?'checked':null ?>> 
                                 <label class="form-check-label" for="inlineRadio10">Não</label>
                                 </div>
 
@@ -232,11 +261,11 @@
                             <label for="inputEstado">Contrato</label>
                             <br>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="property-contract" id="inlineRadio11" value="opcao11">
+                                <input class="form-check-input" type="radio" name="property-contract" id="inlineRadio11" value="1" <?= ($dados['property_contract'] == '1')?'checked':null ?>>
                                 <label class="form-check-label" for="inlineRadio11">Sim</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="property-contract" id="inlineRadio12" value="opcao12">
+                                <input class="form-check-input" type="radio" name="property-contract" id="inlineRadio12" value="0" <?= ($dados['property_contract'] == '0')?'checked':null ?>>
                                 <label class="form-check-label" for="inlineRadio12">Não</label>
                                 </div>
                         </div>
@@ -245,11 +274,11 @@
                     <div class="form-row">
                         <div class="form-group col-md-2">
                             <label for="inputCEP">Mensalidade</label>
-                            <input type="number" class="form-control" id="valor" name="property-monthly-payment">
+                            <input type="number" class="form-control" id="valor" name="property-monthly-payment" value="<?php echo $dados['monthly_payment']; ?>">
                         </div>
                         <div class="form-group col-md-2">
                             <label for="inputCEP">Deposito</label>
-                            <input type="number" class="form-control" id="valor" name="property-deposit">
+                            <input type="number" class="form-control" id="valor" name="property-deposit" value="<?php echo $dados['deposit']; ?>">
                         </div>
                     </div>
                 </div>
@@ -259,18 +288,18 @@
                             <label for="inputCEP">Imagens</label>
                             <div class="form-group">
                                 <label for="exampleFormControlFile1">Imagens selecionadas</label>
-                                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="property-images[]" accept="image/jpg, image/jpeg, image/png" multiple>
+                                <input type="hidden" name="image-id" value ="<?php echo $dadosImg['id_image']; ?>">
+                                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="images[]" accept="image/jpg, image/jpeg, image/png" multiple>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-new-property" name="btn-update-owner">Atualizar Imovel</button>
+            <button type="submit" class="btn btn-new-property" name="btn-update-property">Atualizar Imovel</button>
+            
         </form>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
-        <script>
-            M.AutoInit();
-        </script>
+        
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script>
             window.jQuery || document.write('<script src="assets/js/vendor/jquery.slim.min.js"><\/script>')

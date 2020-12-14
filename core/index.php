@@ -104,7 +104,7 @@ include_once 'connect.php';
                         <button type="button" data-toggle="modal" data-target="#property<?php echo $dados['id_property']; ?>" class="btn btn-primary btn-sm"><i class="fas fa-expand"></i></button>
                       </div>
                       <div class="col-4">
-                        <button type="button" class="btn btn-warning btn-sm"><i style="color: #fff;" class="far fa-edit"></i></button>
+                        <a href="pages/property/update-property.php?id=<?php echo $dados['id_property']; ?>&idAddress=<?php echo $dados['id_address']?>"><button type="button" class="btn btn-warning btn-sm"><i style="color: #fff;" class="far fa-edit"></i></button></a>
                       </div>
                       <div class="col-4">
                         <button type="button" data-toggle="modal" data-target="#propertyDelete<?php echo $dados['id_property']; ?>" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button>

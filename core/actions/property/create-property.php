@@ -130,6 +130,7 @@ if(isset($_POST['btn-new-owner'])):
 			if(move_uploaded_file($temporary, $folder.$newName)):
 				// Dados do Proprietário
 				$url = $newName;
+
 				// Inserindo os dados do Proprietário
 				$imageSql = "INSERT INTO images (id_image, url, id_property) VALUES (null, '$url', $propertyId)";
 

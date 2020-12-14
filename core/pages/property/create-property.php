@@ -219,7 +219,7 @@
                     </div>
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputEstado">Quintal</label>
+                    <label for="inputEstado">Individual</label>
                     <br>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="property-individual" id="inlineRadio5" value="1">
